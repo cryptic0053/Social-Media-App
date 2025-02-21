@@ -1,0 +1,285 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_profile.user }} - Profile</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/cb792c0850.js" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+    <!-- Inline Styles -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: #ffffff;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar .nav-link {
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #007bff;
+            color: white !important;
+        }
+
+        /* Main Content Styles */
+        main {
+            margin-left: 250px; /* Adjust based on sidebar width */
+            padding: 20px;
+        }
+
+        /* Profile Header Styles */
+        .profile-header {
+            background-color: #000;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-top: -75px;
+        }
+
+        .profile-header h5 {
+            margin-top: 10px;
+        }
+
+        .profile-header .btn {
+            margin: 5px;
+        }
+
+        /* Profile Stats Styles */
+        .profile-stats {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .profile-stats .stat-item {
+            text-align: center;
+        }
+
+        .profile-stats .stat-item p {
+            margin: 0;
+        }
+
+        /* About Section Styles */
+        .about-section {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Image Grid Styles */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .image-item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .image-item .card-body {
+            padding: 10px;
+        }
+
+        .image-item .card-body a {
+            color: #dc3545;
+            transition: color 0.3s ease;
+        }
+
+        .image-item .card-body a:hover {
+            color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block sidebar">
+                <div class="text-center mt-3">
+                    <img src="{{ profile.profileimg.url }}" alt="Profile Picture" class="profile-pic">
+                    <h4 class="mt-2"><a href="/profile/{{ user }}" style="text-decoration: none;">@{{ user }}</a></h4>
+                </div>
+                <ul class="nav flex-column mt-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            <i class="fa-solid fa-house mr-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/explore">
+                            <i class="fa-solid fa-compass mr-1"></i> Explore
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                            <i class="fa-solid fa-magnifying-glass mr-1"></i> Search
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            <i class="fa-solid fa-circle-plus mr-1"></i> Create Post
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/{{ user }}">
+                            <i class="fa-solid fa-user mr-1"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logoutt">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                {% include "search.html" %}
+                {% include "profile_upload.html" %}
+                {% include "edit_profile.html" %}
+
+                <!-- Profile Section -->
+                <section>
+                    <div class="profile-header">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ user_profile.profileimg.url }}" alt="Profile Picture">
+                            <div class="ms-3">
+                                <h5>@{{ user_profile.user }}</h5>
+                                <p><i class="fa-solid fa-location-dot"></i> {{ user_profile.location }}</p>
+                            </div>
+                            <div class="ms-auto">
+                                <form action="/follow" method="POST">
+                                    {% csrf_token %}
+                                    {% if user != user_profile.user %}
+                                    <input type="hidden" value="{{ user.username }}" name="follower">
+                                    <input type="hidden" value="{{ user_profile.user }}" name="user">
+                                    <button type="submit" class="btn btn-outline-light">
+                                        {{ follow_unfollow }}
+                                    </button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Stats -->
+                    <div class="profile-stats">
+                        <div class="d-flex justify-content-around">
+                            <div class="stat-item">
+                                <p class="h5">{{ user_post_length }}</p>
+                                <p class="text-muted">Photos</p>
+                            </div>
+                            <div class="stat-item">
+                                <p class="h5">{{ user_followers }}</p>
+                                <p class="text-muted">Followers</p>
+                            </div>
+                            <div class="stat-item">
+                                <p class="h5">{{ user_following }}</p>
+                                <p class="text-muted">Following</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About Section -->
+                    <div class="about-section">
+                        <p class="lead fw-normal mb-1">About</p>
+                        <div class="p-4" style="background-color: #f8f9fa;">
+                            <p class="font-italic mb-1">{{ user_profile.bio }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Photos Section -->
+                    <div class="mt-5">
+                        <p class="lead fw-normal mb-1">Photos</p>
+                        <div class="image-grid">
+                            {% for pos in user_posts %}
+                            <div class="image-item">
+                                <img src="{{ pos.image.url }}" alt="Post Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pos.caption }}</h5>
+                                    {% if user == user_profile.user %}
+                                    <a href="/delete/{{ pos.id }}"><i class="fa-solid fa-trash"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

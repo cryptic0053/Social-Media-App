@@ -1,0 +1,112 @@
+{% load static %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Post</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form action="upload" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- File Upload Section -->
+                    <div class="mb-4 text-center">
+                        <div class="file-upload-container">
+                            <img src="{% static 'css/upload.png' %}" alt="Upload Icon" class="upload-icon mb-3">
+                            <label for="file-upload" class="file-upload-label">
+                                <span class="btn btn-outline-primary">Choose Photo</span>
+                                <input type="file" name="image_upload" class="form-control visually-hidden" id="file-upload">
+                            </label>
+                            <p class="text-muted mt-2">Upload a photo for your post.</p>
+                        </div>
+                    </div>
+
+                    <!-- Caption Section -->
+                    <div class="mb-3">
+                        <label for="caption" class="form-label fw-bold">Caption</label>
+                        <textarea class="form-control" name="caption" id="caption" rows="3" placeholder="Write a caption..."></textarea>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* File Upload Section */
+    .file-upload-container {
+        border: 2px dashed #007bff;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        transition: border-color 0.3s ease;
+    }
+
+    .file-upload-container:hover {
+        border-color: #0056b3;
+    }
+
+    .upload-icon {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    .file-upload-label {
+        cursor: pointer;
+    }
+
+    .file-upload-label input {
+        display: none;
+    }
+
+    /* Modal Header */
+    .modal-header {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* Form Input Styling */
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+    }
+
+    .form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    /* Buttons */
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>

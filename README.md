@@ -9,7 +9,9 @@ Welcome to the Social Media Platform project built using Django! This project ai
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Test Credentials](#Test-Credentials)
+- [Technologies Used](#Technologies-Used)
+- [ER-Diagram](#ER-Diagram)
 
 
 ## Features

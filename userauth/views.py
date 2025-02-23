@@ -255,3 +255,53 @@ def follow(request):
         return redirect('/')
     
     
+
+@login_required(login_url='/loginn')
+def post_list(request):
+    # Get filter parameters from request
+    date_filter = request.GET.get('date')
+    media_type_filter = request.GET.get('media_type')
+    author_filter = request.GET.get('author')
+    search_query = request.GET.get('search')
+
+    # Debug prints
+    print(f"Search query: {search_query}")
+    print(f"Date filter: {date_filter}")
+    print(f"Media filter: {media_type_filter}")
+    print(f"Author filter: {author_filter}")
+
+    posts = Post.objects.all()
+    print(f"Initial post count: {posts.count()}")
+
+    # Apply filters
+    if date_filter == 'latest':
+        posts = posts.order_by('-created_at')
+    elif date_filter == 'oldest':
+        posts = posts.order_by('created_at')
+
+    if media_type_filter == 'images':
+        posts = posts.filter(image__isnull=False)
+        print(f"After image filter: {posts.count()}")
+    elif media_type_filter == 'text-only':
+        posts = posts.filter(image__isnull=True)
+        print(f"After text filter: {posts.count()}")
+
+    if author_filter:
+        posts = posts.filter(user=author_filter)
+        print(f"After author filter: {posts.count()}")
+
+    if search_query:
+        posts = posts.filter(Q(caption__icontains=search_query) | Q(user__icontains=search_query))
+        print(f"After search filter: {posts.count()}")
+
+    profile = Profile.objects.get(user=request.user)
+    
+    context = {
+        'post': posts,  # Changed from 'posts' to 'post' to match your template
+        'profile': profile,
+        'user': request.user.username
+    }
+    
+    return render(request, 'main.html', context)
+    
+    

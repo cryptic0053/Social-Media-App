@@ -164,11 +164,43 @@
                 {% include "modal.html" %}
                 {% include "search.html" %}
 
-                <!-- Home Posts -->
-                <div class="posts-container">
+                <form method="GET" action="{% url 'post_list' %}" class="mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" name="search" class="form-control" placeholder="Search posts..." 
+                                   value="{{ request.GET.search }}">
+                        </div>
+                        <div class="col-md-2">
+                            <select name="date" class="form-control">
+                                <option value="">Sort by date</option>
+                                <option value="latest" {% if request.GET.date == 'latest' %}selected{% endif %}>Latest</option>
+                                <option value="oldest" {% if request.GET.date == 'oldest' %}selected{% endif %}>Oldest</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="media_type" class="form-control">
+                                <option value="">Media type</option>
+                                <option value="images" {% if request.GET.media_type == 'images' %}selected{% endif %}>Images</option>
+                                <option value="text-only" {% if request.GET.media_type == 'text-only' %}selected{% endif %}>Text only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="author" class="form-control" placeholder="Filter by author..." 
+                                   value="{{ request.GET.author }}">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Filter/Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Display filtered posts -->
+                {% if post %}
                     {% for pos in post %}
                     <div class="post-card" id="{{ pos.id }}">
-                        <img src="{{ pos.image.url }}" alt="Post Image" class="post-image">
+                        {% if pos.image %}
+                            <img src="{{ pos.image.url }}" alt="Post Image" class="post-image">
+                        {% endif %}
                         <div class="post-content">
                             <h5><a href="/profile/{{ pos.user }}" style="text-decoration: none;">@{{ pos.user }}</a></h5>
                             <p>{{ pos.caption }}</p>
@@ -178,17 +210,19 @@
                             <a href="/like-post/{{ pos.id }}" class="btn btn-outline-primary">Like</a>
                             <p class="text-muted">
                                 {% if pos.no_of_likes == 0 %}
-                                0 Likes
+                                    0 Likes
                                 {% elif pos.no_of_likes == 1 %}
-                                1 Like
+                                    1 Like
                                 {% else %}
-                                {{ pos.no_of_likes }} Likes
+                                    {{ pos.no_of_likes }} Likes
                                 {% endif %}
                             </p>
                         </div>
                     </div>
                     {% endfor %}
-                </div>
+                {% else %}
+                    <p>No posts found matching your criteria.</p>
+                {% endif %}
             </main>
         </div>
     </div>

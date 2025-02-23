@@ -4,7 +4,7 @@ from socialmedia import settings
 from userauth import views
 from django.conf.urls.static import static
 from django.urls import path
-from .views import create_post,home
+from .views import create_post,home, post_list
 
 
 urlpatterns = [
@@ -21,6 +21,8 @@ urlpatterns = [
     path('search-results/', views.search_results, name='search_results'),
     path('follow', views.follow, name='follow'),
     path('create_post/', create_post),
+    path('posts/', post_list, name='post_list'),
+    
     
     
     

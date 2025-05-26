@@ -1,135 +1,102 @@
-# Social Media Platform using Django
+# 🌐 Social Media App (Django)
 
-Welcome to the Social Media Platform project built using Django! This project aims to create a basic social media platform where users can register, log in, post updates, connect with friends, and more. The platform provides a foundation that you can extend and customize to create your own unique social media experience.
+A feature-rich social media platform built using **Django**, enabling users to register, share posts, follow others, and interact with content. Hosted on Render.
 
-## Table of Contents
+🔗 **Live Demo:** [Visit the App](https://social-media-app-3-1889.onrender.com/loginn/?next=/)
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Test Credentials](#Test-Credentials)
-- [Technologies Used](#Technologies-Used)
-- [ER-Diagram](#ER-Diagram)
+---
 
+## 📌 Features
 
-## Features
+### 👤 User Management
+- User registration and login
+- Profile creation and updates
+- Secure authentication system
 
-- User registration and authentication
-- User profiles with profile pictures and bio
-- News feed displaying posts from friends
-- Post creation and deletion
-- Like  on posts
-- Follow to a user & see its post on home feed
-- unfollow to a user
-- User search functionality
-- Responsive and user-friendly design
+### 📝 Posts & Media
+- Create, edit, and delete posts
+- Upload and display images with posts
+- Display feed from followed users
 
-## Getting Started
+### 🔍 Explore & Social Features
+- Follow/unfollow other users
+- Search users by name
+- View global feed and explore profiles
 
-### Prerequisites
+---
 
-Before you begin, ensure you have the following installed:
+## 🛠️ Technologies Used
 
-- Python (version 3.6 or higher)
-- Django (version 3.2 or higher)
-- Git
+- **Backend:** Django 5.1.4
+- **Database:** SQLite (for development)
+- **Frontend:** HTML, CSS, Bootstrap
+- **Deployment:** Render
+- **Python Version:** 3.11
+- **WSGI Server:** Gunicorn
 
-### Installation
+---
 
-1. Clone the repository:
+## ⚙️ Setup Instructions
 
-   ```bash
-   git clone https://github.com/cryptic0053/Social-Media-App
-   ```
+### 1. Clone the Repository
+```bash
+git clone https://github.com/cryptic0053/Social-Media-App.git
+cd Social-Media-App
+```
 
-2. Navigate to the project directory:
+### 2. Create and Activate Virtual Environment
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-   ```bash
-   cd Social-Media-App
-   ```
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-3. Create a virtual environment (recommended):
+### 4. Apply Migrations
+```bash
+python manage.py migrate
+```
 
-   ```bash
-   virtualenv venv
-   ```
+### 5. Run the Development Server
+```bash
+python manage.py runserver
+```
 
-4. Activate the virtual environment:
+Visit `http://127.0.0.1:8000/` in your browser.
 
-   - On Windows:
+---
 
-     ```bash
-     venv\Scripts\activate
-     ```
+## 📸 ER Diagram
 
-   - On macOS and Linux:
+![ER Diagram](https://github.com/cryptic0053/Social-Media-App/blob/main/ER-diagram.png)
 
-     ```bash
-     source venv/bin/activate
-     ```
+---
 
-5. Install the project dependencies:
+## 🧪 Test Credentials
 
-   ```bash
-   pip install pillow
-   ```
+| Role       | Username | Password |
+|------------|----------|----------|
+| Admin      | admin    | admin123 |
+| Test User  | testuser | test123  |
 
-6. Perform database migrations:
+---
 
-   ```bash
-   python manage.py migrate
-   ```
+## ⚠️ Deployment Tips (Render)
 
-7. Create a superuser account for administrative access:
+- Ensure your `gunicorn` command uses:
+  ```
+  gunicorn socialmedia_app.wsgi:application
+  ```
+- Add your Render domain to `ALLOWED_HOSTS` in `settings.py`
+- Set `DEBUG = False` for production
 
-   ```bash
-   python manage.py createsuperuser
-   ```
+---
 
-8. Run the development server:
+## 👤 Author
 
-   ```bash
-   python manage.py runserver
-   ```
+Developed by [@cryptic0053](https://github.com/cryptic0053)
 
-9. Access the application in your web browser at `http://127.0.0.1:8000/`.
-
-## Usage
-
-- Register a new account or log in with an existing account.
-- Customize your profile by adding a profile picture and bio.
-- Search for other users.
-- Create and delete your own posts.
-- Like on posts from friends.
-- Follow to a user & see its post on home feed
-- unfollow to a user
-- Explore the news feed to see posts from friends.
-- Log out when you're done using the platform.
-
-## Test Credentials
-
-1. Admin User
-- Username: cryptic0053
-- Password: 12345
-
-2. Test User 1
-- Username: Anirban
-- Password: 12345
-
-3. Test User 2
-- Username: qwerty
-- Password: 12345
-
-## Technologies Used
-
-- Django
-- SQLite
-- Bootstrap
-- JavaScript
-- HTML/CSS
-
-## ER-Diagram
-
-![GitHub Logo](https://github.com/cryptic0053/Social-Media-App/blob/main/ER-diagram.png)
+Contributions and feedback are welcome!
